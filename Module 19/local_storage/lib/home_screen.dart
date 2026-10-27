@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_storage/part1_sql_basics_setup/create_insert_screen.dart';
+import 'package:local_storage/part2_crud/crud_playground_screen.dart';
 
 import 'part1_sql_basics_setup/sql_basics_screen.dart';
 
@@ -14,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         children: const [
           _SetupNote(),
-          _SectionTitle('Part 1 — SQL Basics & Database Setup'),
+          _SectionTitle('Part = SQL Basics & Database Setup'),
           _DemoButton(
             label: 'SQL basics (cheat sheet)',
             screen: SqlBasicsScreen(),
@@ -23,6 +24,7 @@ class HomeScreen extends StatelessWidget {
             label: 'Create Insert Screen',
             screen: CreateInsertScreen(),
           ),
+          _DemoButton(label: 'Crud App', screen: CrudPlaygroundScreen()),
         ],
       ),
     );
