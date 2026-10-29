@@ -19,6 +19,12 @@ class _CrudPlaygroundScreenState extends State<CrudPlaygroundScreen> {
   List<Map<String, dynamic>> students = [];
 
   @override
+  void initState() {
+    super.initState();
+    readStudents();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     nameController.dispose();
@@ -38,7 +44,7 @@ class _CrudPlaygroundScreenState extends State<CrudPlaygroundScreen> {
           CREATE TABLE students(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT,
-          age INTEGER
+          age INTEGER)
         ''');
       },
     );
@@ -71,7 +77,7 @@ class _CrudPlaygroundScreenState extends State<CrudPlaygroundScreen> {
     Database db = await openMyDatabase();
     await db.update(
       'students',
-      {'name': nameController.text, 'age': ageController.text},
+      {'name': nameController.text, 'age': int.parse(ageController.text)},
       where: 'id = ?', //Change only the specific student
       whereArgs: [editingId],
     );
@@ -91,9 +97,25 @@ class _CrudPlaygroundScreenState extends State<CrudPlaygroundScreen> {
     readStudents();
   }
 
-  void startEditing(Map<String, dynamic> student) {}
+  void startEditing(Map<String, dynamic> student) {
+    setState(() {
+      editingId = student['id'];
+      nameController.text = student['name'];
+      ageController.text = student['age'].toString();
+    });
+  }
 
-  void saveButtonPresses() {}
+  void saveButtonPresses() {
+    if (nameController.text.isEmpty || ageController.text.isEmpty) {
+      return;
+    }
+
+    if (editingId == null) {
+      addStudent();
+    } else {
+      updateStudent();
+    }
+  }
 
   void clearBoxes() {
     setState(() {
@@ -128,7 +150,49 @@ class _CrudPlaygroundScreenState extends State<CrudPlaygroundScreen> {
                 ),
               ),
             ),
-            const Center(child: Text('CRUD Playground')),
+            ElevatedButton(
+              onPressed: saveButtonPresses,
+              child: Text(editingId == null ? 'ADD' : 'Update'),
+            ),
+            const Center(
+              child: Text('Tap a student to edit. Tap the bin to delete'),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: students.length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> student = students[index];
+                  return ListTile(
+                    leading: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.blueAccent,
+                      ),
+                      child: Align(
+                        alignment: .center,
+                        child: Text(
+                          '${student['id']}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    title: Text('Name: ${student['name']}'),
+                    subtitle: Text('Age: ${student['age']}'),
+                    onTap: () {
+                      startEditing(student);
+                    },
+                    trailing: IconButton(
+                      onPressed: () {
+                        deleteStudent(student['id']);
+                      },
+                      icon: Icon(Icons.delete, color: Colors.red),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
