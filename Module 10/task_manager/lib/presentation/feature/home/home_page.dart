@@ -72,11 +72,11 @@ class _HomePageState extends State<HomePage> {
             Container(
               width: 100,
               decoration: BoxDecoration(
-                color: AppColors.cardBackground,
+                color: AppColors.background,
                 borderRadius: .circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.shadow,
+                    color: AppColors.secondaryText,
                     blurRadius: 8,
                     offset: Offset.zero,
                   ),
