@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/core/app_colors.dart';
 import 'package:task_manager/core/app_strings.dart';
+import 'package:task_manager/core/task.dart';
+import 'package:task_manager/presentation/feature/home/widget/app_logo.dart';
+import 'package:task_manager/presentation/feature/home/widget/filter_button.dart';
+import 'package:task_manager/presentation/feature/home/widget/stat_card.dart';
+import 'package:task_manager/presentation/feature/home/widget/task_card.dart';
 
 class HomePage extends StatefulWidget {
   const new({super.key});
@@ -20,15 +25,7 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             spacing: 12,
             children: [
-              Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: .circular(8),
-                ),
-                child: Icon(Icons.check, color: AppColors.background, size: 13),
-              ),
+              AppLogo(),
               Text(
                 AppStrings.appName,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -56,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 10,
           children: [
             Text(
               AppStrings.goodMorning,
@@ -69,54 +67,91 @@ class _HomePageState extends State<HomePage> {
               'Abir',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
             ),
-            Container(
-              width: 100,
-              decoration: BoxDecoration(
-                color: AppColors.background,
-                borderRadius: .circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.secondaryText,
-                    blurRadius: 8,
-                    offset: Offset.zero,
+            Row(
+              spacing: 10,
+              children: [
+                Expanded(
+                  child: StatCard(
+                    icon: Icons.format_list_bulleted,
+                    iconColor: AppColors.primary,
+                    count: 0,
+                    label: 'Total',
                   ),
-                ],
-              ),
-
-              margin: EdgeInsets.symmetric(vertical: 16),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 18,
-                  right: 16,
-                  top: 8,
-                  bottom: 8,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(Icons.task, color: AppColors.primary),
-                    Text(
-                      '10',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                    Text(
-                      AppStrings.total,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.secondaryText,
-                      ),
-                    ),
-                  ],
+                Expanded(
+                  child: StatCard(
+                    icon: Icons.schedule,
+                    iconColor: AppColors.amberIcon,
+                    count: 0,
+                    label: 'Pending',
+                  ),
                 ),
+                Expanded(
+                  child: StatCard(
+                    icon: Icons.check_circle_outline,
+                    iconColor: AppColors.greenIcon,
+                    count: 0,
+                    label: 'Completed',
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: FilterButton(
+                    label: 'All',
+                    isSelected: true,
+                    onTap: () {},
+                  ),
+                ),
+                Expanded(
+                  child: FilterButton(
+                    label: 'Pending',
+                    isSelected: false,
+                    onTap: () {},
+                  ),
+                ),
+                Expanded(
+                  child: FilterButton(
+                    label: 'Completed',
+                    isSelected: false,
+                    onTap: () {},
+                  ),
+                ),
+              ],
+            ),
+            TaskCard(
+              task: Task(
+                title: 'Finish onboarding flow mockups',
+                description:
+                    'Wrap up the new user onboarding screens for review.',
+                dueDate: 'Nov 4',
+                priority: 'High',
+                createdDate: 'Oct 28, 2026',
               ),
+              onTap: () {},
+              onStatusTap: () {},
+            ),
+            TaskCard(
+              task: Task(
+                title: 'Finish onboarding flow mockups',
+                description:
+                    'Wrap up the new user onboarding screens for review.',
+                dueDate: 'Nov 4',
+                priority: 'High',
+                createdDate: 'Oct 28, 2026',
+              ),
+              onTap: () {},
+              onStatusTap: () {},
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: AppColors.primary,
+        child: Icon(Icons.add, color: AppColors.white),
       ),
     );
   }
