@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                   child: StatCard(
                     icon: Icons.format_list_bulleted,
                     iconColor: AppColors.primary,
-                    count: 0,
+                    count: _tasks.length,
                     label: 'Total',
                   ),
                 ),
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                   child: StatCard(
                     icon: Icons.schedule,
                     iconColor: AppColors.amberIcon,
-                    count: 0,
+                    count: _pendingCount,
                     label: 'Pending',
                   ),
                 ),
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                   child: StatCard(
                     icon: Icons.check_circle_outline,
                     iconColor: AppColors.greenIcon,
-                    count: 0,
+                    count: _completedCount,
                     label: 'Completed',
                   ),
                 ),
