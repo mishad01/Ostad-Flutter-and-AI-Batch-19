@@ -15,8 +15,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<Task> _tasks = demoTasks;
+
+  String _selectedFilter = AppStrings.all;
+
+  List<Task> get _visibleTasks {
+    if (_selectedFilter == AppStrings.pending) {
+      return _tasks.where((task) => task.isCompleted == false).toList();
+    } else if (_selectedFilter == AppStrings.completed) {
+      return _tasks.where((task) => task.isCompleted == true).toList();
+    } else {
+      return _tasks;
+    }
+  }
+
+  int get _completedCount =>
+      _tasks.where((task) => task.isCompleted == true).length;
+
+  int get _pendingCount =>
+      _tasks.where((task) => task.isCompleted == false).length;
+
+  void _onFilterTap(String filter) {
+    setState(() {
+      _selectedFilter = filter;
+    });
+  }
+
+  void _onStatusTap(Task task) {
+    setState(() {
+      task.isCompleted = !task.isCompleted;
+    });
+  }
+
+  void _goToAddTask() {}
+  void _goToDetails() {}
+
   @override
   Widget build(BuildContext context) {
+    final List<Task> visibleTask = _visibleTasks;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.background,
@@ -97,54 +134,93 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Row(
+              spacing: 7,
               children: [
                 Expanded(
                   child: FilterButton(
                     label: 'All',
-                    isSelected: true,
-                    onTap: () {},
+                    isSelected: _selectedFilter == AppStrings.all,
+                    onTap: () => _onFilterTap(AppStrings.all),
                   ),
                 ),
                 Expanded(
                   child: FilterButton(
                     label: 'Pending',
-                    isSelected: false,
-                    onTap: () {},
+                    isSelected: _selectedFilter == AppStrings.pending,
+                    onTap: () => _onFilterTap(AppStrings.pending),
                   ),
                 ),
                 Expanded(
                   child: FilterButton(
                     label: 'Completed',
-                    isSelected: false,
-                    onTap: () {},
+                    isSelected: _selectedFilter == AppStrings.completed,
+                    onTap: () => _onFilterTap(AppStrings.completed),
                   ),
                 ),
               ],
             ),
-            TaskCard(
-              task: Task(
-                title: 'Finish onboarding flow mockups',
-                description:
-                    'Wrap up the new user onboarding screens for review.',
-                dueDate: 'Nov 4',
-                priority: 'High',
-                createdDate: 'Oct 28, 2026',
+            if (_tasks.isNotEmpty)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppStrings.tasks,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.labelText,
+                    ),
+                  ),
+                  Text(
+                    '${visibleTask.length} ${AppStrings.tasks}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.labelText,
+                    ),
+                  ),
+                ],
               ),
-              onTap: () {},
-              onStatusTap: () {},
-            ),
-            TaskCard(
-              task: Task(
-                title: 'Finish onboarding flow mockups',
-                description:
-                    'Wrap up the new user onboarding screens for review.',
-                dueDate: 'Nov 4',
-                priority: 'High',
-                createdDate: 'Oct 28, 2026',
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: visibleTask.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: TaskCard(
+                      task: visibleTask[index],
+                      onTap: _goToDetails,
+                      onStatusTap: () => _onStatusTap(visibleTask[index]),
+                    ),
+                  );
+                },
               ),
-              onTap: () {},
-              onStatusTap: () {},
             ),
+            // TaskCard(
+            //   task: Task(
+            //     title: 'Finish onboarding flow mockups',
+            //     description:
+            //         'Wrap up the new user onboarding screens for review.',
+            //     dueDate: 'Nov 4',
+            //     priority: 'High',
+            //     createdDate: 'Oct 28, 2026',
+            //   ),
+            //   onTap: () {},
+            //   onStatusTap: () {},
+            // ),
+            // TaskCard(
+            //   task: Task(
+            //     title: 'Finish onboarding flow mockups',
+            //     description:
+            //         'Wrap up the new user onboarding screens for review.',
+            //     dueDate: 'Nov 4',
+            //     priority: 'High',
+            //     createdDate: 'Oct 28, 2026',
+            //   ),
+            //   onTap: () {},
+            //   onStatusTap: () {},
+            // ),
           ],
         ),
       ),
