@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/core/app_colors.dart';
-import 'package:task_manager/core/app_strings.dart';
 
 class StatCard extends StatelessWidget {
   const new({
