@@ -18,7 +18,9 @@ class SquareIconButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(11),
           border: Border.all(color: AppColors.border),
         ),
-        child: IconButton(icon: Icon(icon), onPressed: onTap),
+        child: Center(
+          child: IconButton(icon: Icon(icon), onPressed: onTap),
+        ),
       ),
     );
   }

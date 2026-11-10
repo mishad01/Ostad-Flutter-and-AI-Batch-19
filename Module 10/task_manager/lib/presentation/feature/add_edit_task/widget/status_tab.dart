@@ -18,7 +18,7 @@ class StatusTab extends StatelessWidget {
       height: 38,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.buttonActiveBg : AppColors.softGrey,
+        color: isSelected ? AppColors.white : AppColors.softGrey,
         borderRadius: BorderRadius.circular(9),
       ),
       child: Text(

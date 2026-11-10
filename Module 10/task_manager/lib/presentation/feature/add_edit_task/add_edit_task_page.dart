@@ -33,7 +33,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             spacing: 8,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,29 +108,38 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 ],
               ),
               FieldLabel(text: AppStrings.status),
-
-              Row(
-                spacing: 8,
-                children: [
-                  Expanded(
-                    child: StatusTab(
-                      label: AppStrings.status,
-                      isSelected: true,
-                      onTap: () {
-                        // Handle status selection
-                      },
-                    ),
+              Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColors.softGrey,
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      Expanded(
+                        child: StatusTab(
+                          label: AppStrings.pending,
+                          isSelected: true,
+                          onTap: () {
+                            // Handle status selection
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: StatusTab(
+                          label: AppStrings.status,
+                          isSelected: false,
+                          onTap: () {
+                            // Handle status selection
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: StatusTab(
-                      label: AppStrings.status,
-                      isSelected: false,
-                      onTap: () {
-                        // Handle status selection
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
               Spacer(),
               ElevatedButton(

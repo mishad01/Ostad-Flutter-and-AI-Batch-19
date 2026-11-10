@@ -12,7 +12,7 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color softGrey = Color(0xFFEFF0F4);
   static const Color iconBox = Color(0xFFF3F4F7);
-  static const Color buttonActiveBg =Color.fromARGB(255, 217, 218, 221));
+  static const Color buttonActiveBg = Color(0xFFE4E5E9);
 
   // Text
   static const Color primaryText = Color(0xFF15181E);

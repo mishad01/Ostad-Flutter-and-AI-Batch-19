@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/core/app_colors.dart';
 import 'package:task_manager/core/app_strings.dart';
 import 'package:task_manager/core/task.dart';
+import 'package:task_manager/presentation/feature/add_edit_task/add_edit_task_page.dart';
 import 'package:task_manager/presentation/feature/home/widget/app_logo.dart';
 import 'package:task_manager/presentation/feature/home/widget/filter_button.dart';
 import 'package:task_manager/presentation/feature/home/widget/stat_card.dart';
 import 'package:task_manager/presentation/feature/home/widget/task_card.dart';
+import 'package:task_manager/presentation/feature/task_details.dart/task_details_page.dart';
 
 class HomePage extends StatefulWidget {
   const new({super.key});
@@ -48,7 +50,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _goToAddTask() {}
-  void _goToDetails() {}
+  void _goToDetails() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => TaskDetailsPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +230,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => AddEditTaskPage()));
+        },
         backgroundColor: AppColors.primary,
         child: Icon(Icons.add, color: AppColors.white),
       ),
