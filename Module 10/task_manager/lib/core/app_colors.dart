@@ -12,6 +12,7 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color softGrey = Color(0xFFEFF0F4);
   static const Color iconBox = Color(0xFFF3F4F7);
+  static const Color buttonActiveBg =Color.fromARGB(255, 217, 218, 221));
 
   // Text
   static const Color primaryText = Color(0xFF15181E);
@@ -21,7 +22,7 @@ class AppColors {
   static const Color mutedText = Color(0xFF9AA1AC);
 
   // Lines
-  static const Color border = Color(0xFFE8EAEE);
+  static const Color border = Color.fromARGB(255, 210, 211, 215);
   static const Color divider = Color(0xFFF0F1F4);
 
   // Green (completed / low priority)
