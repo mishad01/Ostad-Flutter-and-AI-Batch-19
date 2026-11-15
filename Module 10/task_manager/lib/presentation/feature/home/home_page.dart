@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/core/app_colors.dart';
 import 'package:task_manager/core/app_strings.dart';
+import 'package:task_manager/core/database_helper.dart';
 import 'package:task_manager/core/task.dart';
 import 'package:task_manager/presentation/feature/add_edit_task/add_edit_task_page.dart';
 import 'package:task_manager/presentation/feature/home/widget/app_logo.dart';
+import 'package:task_manager/presentation/feature/home/widget/empty_task_view.dart';
 import 'package:task_manager/presentation/feature/home/widget/filter_button.dart';
+import 'package:task_manager/presentation/feature/home/widget/no_result_view.dart';
 import 'package:task_manager/presentation/feature/home/widget/stat_card.dart';
 import 'package:task_manager/presentation/feature/home/widget/task_card.dart';
 import 'package:task_manager/presentation/feature/task_details.dart/task_details_page.dart';
@@ -17,7 +20,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Task> _tasks = demoTasks;
+  final List<Task> _tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  Future<void> _loadTasks() async {
+    List<Task> taskFromDatabase = await DatabaseHelper.getTasks();
+    if (!mounted) return;
+    setState(() {
+      _tasks.clear();
+      _tasks.addAll(taskFromDatabase);
+    });
+  }
 
   String _selectedFilter = AppStrings.all;
 
@@ -43,16 +61,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _onStatusTap(Task task) {
-    setState(() {
-      task.isCompleted = !task.isCompleted;
-    });
+  Future<void> _onStatusTap(Task task) async {
+    task.isCompleted = !task.isCompleted;
+    await DatabaseHelper.updateTask(task);
+    await _loadTasks();
   }
 
-  void _goToAddTask() {}
-  void _goToDetails() {
+  Future<void> _goToAddTask() async {
+    await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => AddEditTaskPage()));
+    await _loadTasks();
+  }
+
+  Future<void> _goToDetails() async {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => TaskDetailsPage()));
+    await _loadTasks();
   }
 
   @override
@@ -186,6 +210,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+
+            if (_tasks.isEmpty) ...[
+              EmptyTaskView(onAddTap: _goToAddTask),
+            ] else if (visibleTask.isEmpty)
+              NoResultView(),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -230,10 +259,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => AddEditTaskPage()));
-        },
+        onPressed: _goToAddTask,
         backgroundColor: AppColors.primary,
         child: Icon(Icons.add, color: AppColors.white),
       ),

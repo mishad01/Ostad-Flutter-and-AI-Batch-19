@@ -1,5 +1,6 @@
 class Task {
   Task({
+    this.id,
     required this.title,
     required this.description,
     required this.dueDate,
@@ -8,53 +9,34 @@ class Task {
     this.isCompleted = false,
   });
 
+  final int? id;
   final String title;
   final String description;
   final String dueDate;
   final String priority;
   final String createdDate;
   bool isCompleted;
-}
 
-List<Task> demoTasks = [
-  Task(
-    title: 'Finish onboarding flow mockups',
-    description: 'Wrap up the new user onboarding screens for review.',
-    dueDate: 'Nov 4',
-    priority: 'High',
-    createdDate: 'Oct 28, 2026',
-    isCompleted: false,
-  ),
-  Task(
-    title: 'Grocery shopping',
-    description: 'Milk, eggs, bread, and vegetables for the week.',
-    dueDate: 'Nov 3',
-    priority: 'Low',
-    createdDate: 'Nov 1, 2026',
-    isCompleted: false,
-  ),
-  Task(
-    title: 'Submit quarterly report',
-    description: 'Compile Q3 metrics and send to the finance team.',
-    dueDate: 'Oct 30',
-    priority: 'High',
-    createdDate: 'Oct 12, 2026',
-    isCompleted: false,
-  ),
-  Task(
-    title: 'Book dentist appointment',
-    description: 'Call the clinic and schedule a cleaning.',
-    dueDate: 'Nov 10',
-    priority: 'Medium',
-    createdDate: 'Nov 2, 2026',
-    isCompleted: false,
-  ),
-  Task(
-    title: 'Read "Atomic Habits" - ch. 4',
-    description: 'Continue the habit-stacking chapter before bed.',
-    dueDate: 'Nov 2',
-    priority: 'Low',
-    createdDate: 'Oct 25, 2026',
-    isCompleted: true,
-  ),
-];
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'dueDate': dueDate,
+      'priority': priority,
+      'createdDate': createdDate,
+      'isCompleted': isCompleted ? 1 : 0,
+    };
+  }
+
+  factory Task.fromMap(Map<String, dynamic> mp) {
+    return Task(
+      id: mp['id'] as int?,
+      title: mp['title'],
+      description: mp['description'],
+      dueDate: mp['dueDate'],
+      priority: mp['priority'],
+      createdDate: mp['createdDate'],
+      isCompleted: mp['isCompleted'] == 1,
+    );
+  }
+}
