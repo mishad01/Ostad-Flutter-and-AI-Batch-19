@@ -20,10 +20,11 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         height: 50,
         decoration: BoxDecoration(
-          // color: backgroundColor,
+          color: backgroundColor,
           border: Border.all(color: borderColor, width: 1.5),
           borderRadius: BorderRadius.circular(14),
         ),

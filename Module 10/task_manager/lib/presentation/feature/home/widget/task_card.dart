@@ -78,6 +78,22 @@ class TaskCard extends StatelessWidget {
                         color: AppColors.labelText,
                       ),
                       Text(
+                        task.dueDate,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: .w600,
+                          color: AppColors.labelText,
+                        ),
+                      ),
+                      Container(
+                        height: 3,
+                        width: 3,
+                        decoration: BoxDecoration(
+                          color: AppColors.border,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Text(
                         task.priority,
                         style: TextStyle(
                           fontSize: 12,

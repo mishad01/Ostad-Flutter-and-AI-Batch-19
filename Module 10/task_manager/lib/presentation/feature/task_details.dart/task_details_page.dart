@@ -131,7 +131,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             ActionButton(
               icon: Icons.done,
               label: 'Mark as Completed',
-              textColor: AppColors.primary,
+              textColor: Colors.white,
               borderColor: AppColors.primary,
               backgroundColor: AppColors.primary,
               onTap: () {
@@ -145,7 +145,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               label: 'Delete Task',
               textColor: AppColors.red,
               borderColor: AppColors.red,
-              backgroundColor: AppColors.red,
+              backgroundColor: Colors.white,
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AddEditTaskPage()),
